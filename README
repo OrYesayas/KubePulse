@@ -1,0 +1,25 @@
+# KubePulse 🔍
+
+KubePulse is a lightweight, modular CLI tool written in Python, designed to perform quick health checks, diagnostic scanning, and reliability validation on Kubernetes and OpenShift clusters.
+
+The tool can be executed either directly against a **live cluster API**, or in **Disconnected/Offline Mode** by consuming local cluster metric dumps—making it ideal for air-gapped or restricted production enterprise environments.
+
+## Features
+- **Live & Offline Diagnostics:** Run validation logic directly on a cluster or analyze a static JSON metadata dump.
+- **Resource Limits Validation:** Scans workloads to catch missing CPU/Memory configuration limits.
+- **Microservices Health Checks:** Flags Pods trapped in `CrashLoopBackOff`, `OOMKilled`, or container runtime anomalies.
+- **Beautiful Terminal Reports:** Generates structured, colored terminal output using `rich` tables or standard JSON exports.
+
+## Project Architecture
+The project follows a clean, decoupled micro-architecture:
+1. `cli.py`: Handles command line routing and argument validations.
+2. `collector.py`: Interfaces with the official Python Kubernetes Client SDK.
+3. `analyzer.py`: Contains decoupled diagnostic rules and rule execution engines.
+4. `reporter.py`: Manages data rendering layer (Terminal output, JSON exports).
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone [https://github.com/YOUR_GITHUB_USERNAME/kubepulse.git](https://github.com/OrYesayas/kubepulse.git)
+cd kubepulse
