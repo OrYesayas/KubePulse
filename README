@@ -1,25 +1,66 @@
-# KubePulse 🔍
+# KubePulse ☸️
 
-KubePulse is a lightweight, modular CLI tool written in Python, designed to perform quick health checks, diagnostic scanning, and reliability validation on Kubernetes and OpenShift clusters.
+KubePulse is a lightweight, high-performance Command Line Interface (CLI) diagnostic tool designed for Kubernetes cluster health monitoring and security scanning. It allows DevOps engineers and SREs to quickly audit cluster states, detect misconfigurations, and pinpoint failing resources either in real-time or via offline data dumps.
 
-The tool can be executed either directly against a **live cluster API**, or in **Disconnected/Offline Mode** by consuming local cluster metric dumps—making it ideal for air-gapped or restricted production enterprise environments.
+## 🚀 Key Features
+- **Live Cluster Scan:** Connects directly to your active Kubernetes cluster via `kubectl` configuration to fetch real-time data.
+- **Offline/Disconnected Mode:** Scan and analyze cluster states without a live connection using local JSON cluster dumps.
+- **Automated Diagnostic Engine:** Rules-based analysis that checks for critical errors (`CrashLoopBackOff`, `Pending` pods), container restarts, and security missing configurations (e.g., missing Memory/CPU Limits).
+- **Rich Terminal UI:** Outputs beautiful, structured, and color-coded diagnostic tables for maximum readability.
 
-## Features
-- **Live & Offline Diagnostics:** Run validation logic directly on a cluster or analyze a static JSON metadata dump.
-- **Resource Limits Validation:** Scans workloads to catch missing CPU/Memory configuration limits.
-- **Microservices Health Checks:** Flags Pods trapped in `CrashLoopBackOff`, `OOMKilled`, or container runtime anomalies.
-- **Beautiful Terminal Reports:** Generates structured, colored terminal output using `rich` tables or standard JSON exports.
+---
 
-## Project Architecture
-The project follows a clean, decoupled micro-architecture:
-1. `cli.py`: Handles command line routing and argument validations.
-2. `collector.py`: Interfaces with the official Python Kubernetes Client SDK.
-3. `analyzer.py`: Contains decoupled diagnostic rules and rule execution engines.
-4. `reporter.py`: Manages data rendering layer (Terminal output, JSON exports).
+## 🛠️ Installation & Setup
 
-## Installation
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/OrYesayas/KubePulse.git](https://github.com/OrYesayas/KubePulse.git)
+   cd KubePulse
+Install required dependencies:
 
-1. Clone the repository:
-```bash
-git clone https://github.com/OrYesayas/KubePulse.git
-cd kubepulse
+Bash
+python -m pip install -r requirements.txt
+💻 Usage
+1. Live Cluster Scan
+To scan an active, live Kubernetes cluster:
+
+Bash
+python src/cli.py scan
+To scan a specific namespace:
+
+Bash
+python src/cli.py scan --namespace production
+2. Offline / Disconnected Scan (Recommended for Testing)
+To test the tool locally using a pre-generated mock cluster dataset:
+
+Bash
+python src/cli.py scan --offline-file mock_cluster.json
+📊 Usage Demonstration
+Here is an example of KubePulse analyzing a simulated production environment in offline mode, catching critical application crashes and cluster-level node failures:
+
+Plaintext
+⚠️ Running in OFFLINE/DISCONNECTED mode using: mock_cluster.json
+🔍 Analyzing cluster state against configuration rules...
+
+                                     KubePulse Security & Health Diagnostic Report
+┏━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Severity ┃ Namespace     ┃ Resource                                    ┃ Message                                     ┃
+┡━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ CRITICAL │ production    │ Pod/payment-api-7f89                        │ Pod is in 'Pending' state.                  │
+│ WARNING  │ production    │ Pod/payment-api-7f89 (Container:            │ High restart count detected: 12 restarts.   │
+│          │               │ api-container)                              │                                             │
+│ CRITICAL │ production    │ Pod/payment-api-7f89                        │ Container waiting due to: CrashLoopBackOff. │
+│ WARNING  │ frontend      │ Pod/frontend-service-2a1b                   │ Container 'web-app' has no Memory Limits    │
+│          │               │                                             │ configured.                                 │
+│ CRITICAL │ Cluster-Level │ Node/node-worker-2                          │ Node status condition 'Ready' is: False.    │
+└──────────┴───────────────┴─────────────────────────────────────────────┴─────────────────────────────────────────────┘
+
+📢 Total incidents found: 5
+⚙️ Architecture & Components
+cli.py: Entry point handling user inputs, arguments, and command routing using click.
+
+collector.py: Interacts with the Kubernetes Python Client to retrieve live objects (Pods, Nodes, Namespaces).
+
+analyzer.py: The core logical engine evaluating fetched resources against custom-built health and security validation rules.
+
+reporter.py: Formats the diagnostic results into high-quality terminal tables using rich.
