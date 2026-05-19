@@ -1,0 +1,58 @@
+{
+    "pods": [
+        {
+            "name": "payment-api-7f89",
+            "namespace": "production",
+            "status": "Pending",
+            "container_statuses": [
+                {
+                    "name": "api-container",
+                    "ready": false,
+                    "restart_count": 12,
+                    "waiting_reason": "CrashLoopBackOff"
+                }
+            ],
+            "resources": [
+                {
+                    "name": "api-container",
+                    "limits": {"cpu": "500m", "memory": "256Mi"},
+                    "requests": {"cpu": "250m", "memory": "128Mi"}
+                }
+            ]
+        },
+        {
+            "name": "frontend-service-2a1b",
+            "namespace": "frontend",
+            "status": "Running",
+            "container_statuses": [
+                {
+                    "name": "web-app",
+                    "ready": true,
+                    "restart_count": 0,
+                    "waiting_reason": null
+                }
+            ],
+            "resources": [
+                {
+                    "name": "web-app",
+                    "limits": {"cpu": "200m"},
+                    "requests": {"cpu": "100m"}
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "name": "node-worker-1",
+            "status": "True",
+            "cpu_capacity": "4",
+            "memory_capacity": "16Gi"
+        },
+        {
+            "name": "node-worker-2",
+            "status": "False",
+            "cpu_capacity": "4",
+            "memory_capacity": "16Gi"
+        }
+    ]
+}
