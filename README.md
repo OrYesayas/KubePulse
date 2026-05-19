@@ -184,35 +184,6 @@ The project also focuses on disconnected and air-gapped environments where tradi
 
 ---
 
-# 🔮 Future Improvements
-
-Planned future features include:
-
-- YAML and HTML report export
-- Prometheus integration
-- Custom rule engine support
-- Slack / Discord alerting
-- Multi-cluster scanning
-- RBAC security analysis
-- Helm release inspection
-- CI/CD integration support
-
----
-
-# 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-# 🤝 Contributing
-
-Contributions, ideas, and improvements are welcome.
-
-Feel free to open issues or submit pull requests.
-
----
-
 # ⭐ Support
 
 If you found this project useful, consider starring the repository to support future development.
