@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Ready-326CE5)
 ![CLI](https://img.shields.io/badge/Interface-CLI-black)
-![License](https://img.shields.io/badge/License-MIT-green)
+
 
 KubePulse is a lightweight Kubernetes diagnostic and security auditing CLI designed for DevOps engineers, SRE teams, and platform operators.
 
